@@ -50,14 +50,7 @@ class DictionariesNormal {
    * 获取其他数据
    */
   async getUserInfo() {
-    let promise = cacheMap.get('userInfo');
-    if (!promise) {
-      const result = await getUserInfo();
-      cacheMap.set('userInfo', result);
-      console.log('cacheMap', cacheMap);
-      return result;
-    }
-    return promise;
+    return cache(getUserInfo,'userInfo')
   }
 
   async getOptions(key) {
@@ -66,5 +59,16 @@ class DictionariesNormal {
   }
 }
 
-export default new Dictionaries();
-// export default new DictionariesNormal();
+function cache(fn,key){
+  let promise = cacheMap.get(key);
+  if (!promise) {
+    promise = fn();
+    cacheMap.set(key, promise);
+    console.log('cacheMap fn', cacheMap);
+  }
+  return promise;
+}
+
+// export default new Dictionaries();
+export default new DictionariesNormal();
+
