@@ -1,11 +1,12 @@
+import decorate from './decorate';
+
 const cacheMap = new Map();
 
-export default function apiCache(target, name, descriptor) {
+function handleDataCache(target, name, descriptor, [key]) {
   // 拿到函数体并保存
   const fn = descriptor.value;
   // 修改函数体
   descriptor.value = function () {
-    const key = name;
     let promise = cacheMap.get(key);
     if (!promise) {
       // 设定promise
@@ -23,4 +24,8 @@ export default function apiCache(target, name, descriptor) {
     return promise;
   };
   return descriptor;
+}
+
+export default function dataCache(...args) {
+  return decorate(handleDataCache, args);
 }

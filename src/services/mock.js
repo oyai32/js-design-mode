@@ -37,3 +37,7 @@ Mock.mock(`${BASE_URL}/dictionaries`, {
     },
   ],
 });
+
+Mock.mock(`${BASE_URL}/getUserInfo`, {
+  name: 'zzr',
+});

@@ -63,7 +63,6 @@ export default {
   },
   created() {
     this.defaultActive = this.$route.meta.nav || this.$route.name;
-    console.log(this.$route);
     let pageList = this.getAllRoutes(this.$router.options.routes);
     let routeMap = {};
     for (let item of pageList) {
