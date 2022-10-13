@@ -4,12 +4,11 @@
       :loading="loading"
       @click="getData"
     >
-      点我获取时间
+      获取时间
     </el-button>
-    <br/>
-    {{time}}
+    <br/><br/>
+    {{ time }}
   </div>
-  
 </template>
 <script>
 export default {

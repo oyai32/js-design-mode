@@ -12,12 +12,6 @@ const routes = [
       require(['@/view/components/layout/TheHome.vue'], resolve),
     children: [
       {
-        path: '/loading',
-        name: 'loading',
-        component: (resolve) => require(['@/view/pages/Loading.vue'], resolve),
-        meta: { title: 'loading' },
-      },
-      {
         path: '/introduce',
         name: 'introduce',
         component: (resolve) =>
@@ -45,6 +39,29 @@ const routes = [
             component: (resolve) =>
               require(['@/view/pages/decorate/Demo2.vue'], resolve),
             meta: { title: '装饰者模式Demo2', nav: 'decorate' },
+          },
+        ],
+      },
+      {
+        path: '/template',
+        name: 'template',
+        redirect: '/template/loading1',
+        component: (resolve) => require(['@/view/pages/template/Index.vue'], resolve),
+        meta: { title: '模板方法模式' },
+        children: [
+          {
+            path: '/template/loading1',
+            name: 'templateLoading1',
+            component: (resolve) =>
+              require(['@/view/pages/template/Loading1.vue'], resolve),
+            meta: { title: '模板方法模式Loading1', nav: 'template' },
+          },
+          {
+            path: '/template/loading2',
+            name: 'templateLoading2',
+            component: (resolve) =>
+              require(['@/view/pages/template/Loading2.vue'], resolve),
+            meta: { title: '模板方法模式Loading1', nav: 'template' },
           },
         ],
       },

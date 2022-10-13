@@ -13,10 +13,10 @@ export default [
     icon: 'el-icon-s-grid',
     name: 'template',
     title: '模板模式',
-    subs: [
-      {
-        name: 'loading',
-      },
-    ],
+    // subs: [
+    //   {
+    //     name: 'loading',
+    //   },
+    // ],
   },
 ];
