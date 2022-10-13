@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import menu from '@/configs/menu';
+
 export default {
   data() {
     return {
@@ -56,26 +58,12 @@ export default {
       routeMap: {},
       defaultActive: '',
       // 定义菜单的结构，每个对象都需要有name
-      items: [
-        {
-          icon: 'el-icon-location',
-          name: 'introduce',
-        },
-        {
-          icon: 'el-icon-s-grid',
-          name: 'template',
-          title: '模板模式',
-          subs: [
-            {
-              name: 'loading',
-            },
-          ],
-        },
-      ],
+      items: menu,
     };
   },
   created() {
-    this.defaultActive = this.$route.name;
+    this.defaultActive = this.$route.meta.nav || this.$route.name;
+    console.log(this.$route);
     let pageList = this.getAllRoutes(this.$router.options.routes);
     let routeMap = {};
     for (let item of pageList) {
@@ -87,8 +75,14 @@ export default {
   },
   methods: {
     getTitle(item) {
-      if (item.subs && item.subs.length > 0) return item.title;
-      else return this.routeMap[item.name] && this.routeMap[item.name].title;
+      if (item.subs && item.subs.length > 0) {
+        return item.title;
+      } else {
+        return (
+          item.title ||
+          (this.routeMap[item.name] && this.routeMap[item.name].title)
+        );
+      }
     },
     // 选中菜单的方法（点击菜单进入，需刷新页面）
     selectFn(name) {
