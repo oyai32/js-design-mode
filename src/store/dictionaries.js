@@ -9,7 +9,7 @@ class Dictionaries {
    * 获取所有字典值数据
    */
   @dataCache('dictionaries')
-  getDictionaries() {
+  getDictionaryData() {
     return getDictionaries();
   }
 
@@ -22,7 +22,7 @@ class Dictionaries {
   }
 
   async getOptions(key) {
-    const result = await this.getDictionaries();
+    const result = await this.getDictionaryData();
     return result[key];
   }
 }
@@ -35,13 +35,13 @@ class DictionariesNormal {
   /**
    * 获取所有字典值数据
    */
-  async getDictionaries() {
+  async getDictionaryData() {
     let promise = cacheMap.get('dictionaries');
     if (!promise) {
-      const result = await getDictionaries();
-      cacheMap.set('dictionaries', result);
-      console.log('cacheMap', cacheMap);
-      return result;
+      promise = getDictionaries();
+
+      cacheMap.set('dictionaries', promise);
+      console.log('自己做 cacheMap', cacheMap);
     }
     return promise;
   }
@@ -61,7 +61,7 @@ class DictionariesNormal {
   }
 
   async getOptions(key) {
-    const result = await this.getDictionaries();
+    const result = await this.getDictionaryData();
     return result[key];
   }
 }

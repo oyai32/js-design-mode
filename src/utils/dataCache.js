@@ -10,12 +10,7 @@ function handleDataCache(target, name, descriptor, [key]) {
     let promise = cacheMap.get(key);
     if (!promise) {
       // 设定promise
-      promise = fn.apply(this, arguments).catch((error) => {
-        // 在请求回来后，如果出现问题，把promise从cache中删除
-        cacheMap.delete(key);
-        // 返回错误
-        return Promise.reject(error);
-      });
+      promise = fn.apply(this, arguments);
 
       // 使用缓存，缓存过期之后再次get就会获取null，而从服务端继续请求
       cacheMap.set(key, promise);
