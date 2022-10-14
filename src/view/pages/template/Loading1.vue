@@ -7,9 +7,8 @@
       点我获取时间
     </el-button>
     <br/><br/>
-    {{ time }}
+    {{ data }}
   </div>
-  
 </template>
 <script>
 export default {
@@ -17,21 +16,25 @@ export default {
   data() {
     return {
       loading: false,
-      time: null,
+      data: null,
     }
   },
   methods: {
     async getData() {
       this.loading = true;
-      const { time } = await this.mockData();
-      this.time = time;
+      try {
+        const { data } = await this.mockData();
+        this.data = data;
+      } catch (error) {
+        console.log('错误处理', error);
+      }
       this.loading = false;
     },
 
     mockData() {
       return new Promise (resolve => {
         setTimeout(() => {
-          resolve({time: new Date()})
+          resolve({data: new Date()})
         }, 1000);
       })
     }

@@ -7,30 +7,46 @@
       获取时间
     </el-button>
     <br/><br/>
-    {{ time }}
+    {{ data }}
   </div>
 </template>
+
 <script>
+import DealRequest from '@/utils/loading.js';
+
 export default {
   name: 'Loading',
   data() {
     return {
       loading: false,
-      time: null,
+      data: null,
     }
   },
   methods: {
     async getData() {
-      this.loading = true;
-      const { time } = await this.mockData();
-      this.time = time;
-      this.loading = false;
+      const dealRequest = new DealRequest({
+        requestData:async ()=>{
+          const {data} =  await this.mockData()
+           this.data = data;
+           return data;
+        },
+     
+      })
+      dealRequest.init();
+      // this.loading = true;
+      // try {
+      //   const { data } = await this.mockData();
+      //   this.data = data;
+      // } catch (error) {
+      //   console.log('错误处理', error);
+      // }
+      // this.loading = false;
     },
 
     mockData() {
       return new Promise (resolve => {
         setTimeout(() => {
-          resolve({time: new Date()})
+          resolve({data: new Date()})
         }, 1000);
       })
     }
