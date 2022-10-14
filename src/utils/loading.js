@@ -1,43 +1,24 @@
-class DealRequest {
-  constructor({setLoading,cancelLoading,requestData,setData,setError}) {
-    // this.setLoading = setLoading;
-    // this.cancelLoading = cancelLoading;
-    this.requestData = requestData;
-    // this.setData = setData;
-    // this.setError = setError;
-  }
+import { ref } from '@vue/composition-api';
 
-  setLoading() {
-    this.loading = true;
-  }
+function dealLoading(asyncFunction) {
+  const loading = ref(null);
+  const data = ref(null);
 
-  cancelLoading() {
-    this.loading = false;
-  }
-
-  requestData(){
-    throw new Error('需要子类实现')
-  }
-
-
-
-  setError() {
-    console.log('错误处理', error);
-
-    // throw new Error('需要子类实现')
-  }
-
-  async init() {
-    this.setLoading();
+  const execute = async () => {
+    // 请求开始时，设置 loading 为 true，清除已有数据和 error 状态
+    loading.value = true;
+    data.value = null;
     try {
-       await this.requestData();
+      const response = await asyncFunction();
+      data.value = response;
     } catch (error) {
-      this.setError(error);
-    }finally{
-      this.cancelLoading();
+      console.log('错误处理', error);
+    } finally {
+      loading.value = false;
     }
-  }
+  };
 
+  return { execute, loading, data };
 }
 
-export default DealRequest;
+export default dealLoading;
