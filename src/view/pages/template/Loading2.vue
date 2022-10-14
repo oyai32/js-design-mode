@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button :loading="loading" @click="handleClick"> 获取时间 </el-button>
+    <el-button :loading="loading" @click="handleClick"> 获取时间2 </el-button>
     <br /><br />
     {{ data }}
   </div>
